@@ -1,14 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Certificate Generator | CERRT | SemiKolan</title>
-</head>
-<body>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Certificate Generator</h1>
+      <h1>Certificate Generator</h1>
     </header>
-</body>
+    <main>
+      <div>
+        <div id="containerdiv">
+          <div id="certificatediv">
+            <canvas id="certificatecanvas"></canvas>
+          </div>
+          <div class="downloadcontainer">
+            <div>
+              Download as:
+              <select id="downloadtype">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option value="pdf">PDF</option>
+              </select>
+            </div>
+            <div>
+              <button id="downloadbutton">Download</button>
+            </div>
+          </div>
+        </div>
+        <aside id="asidebar">
+          <div id="editor"></div>
+          <div id="inputs">
+            <div>
+              <input type="checkbox" />
+              <input
+                type="text"
+                value="Holder's Name"
+                data-fontsize="120"
+                data-font="'Open Sans', sans-serif"
+                data-textalign="center"
+                data-x="50"
+                data-y="50"
+                data-color="#000"
+                data-opacity="0.8"
+                class="certinputs"
+              />
+            </div>
+            <div>
+              <input type="checkbox" />
+              <input
+                type="text"
+                value="Organization's Name"
+                data-fontsize="70"
+                data-font="'Open Sans', sans-serif"
+                data-textalign="center"
+                data-x="50"
+                data-y="30"
+                data-color="#000"
+                data-opacity="0.8"
+                class="certinputs"
+              />
+            </div>
+            <div>
+              <input type="checkbox" />
+              <input
+                type="text"
+                value="using CERRT "
+                data-fontsize="60"
+                data-font="'Open Sans', sans-serif"
+                data-textalign="center"
+                data-x="50"
+                data-y="67"
+                data-color="#000"
+                data-opacity="0.8"
+                class="certinputs"
+              />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="assets/script.js"></script>
+  </body>
 </html>

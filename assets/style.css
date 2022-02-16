@@ -1,0 +1,104 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+    background: linear-gradient(to bottom, #06072c 0%, #09012b 100%);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+header{
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica;
+    font-weight: 500;
+    background: linear-gradient(to right, #1d024b, rgb(6, 77, 117));
+    color: #fff;
+}
+main>div{
+    display:flex;
+    min-height: calc(100vh - 62px);
+}
+#asidebar{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    max-width: 400px;
+    background: #ffffff0a;
+}
+#containerdiv{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 700px;
+    padding-top: 20px ;
+    margin: 0 auto;
+    gap: 20px;
+}
+.downloadcontainer{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.3em;
+}
+#downloadtype{
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 5px 10px;
+    border: transparent;
+    border-radius: 5px;
+}
+#downloadbutton{
+    font-size: 1em;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgb(25, 100, 240);
+    border: transparent;
+    color: #fff;
+    cursor:pointer;
+}
+
+
+#certificatecanvas{
+    width: 100%;
+    box-shadow: 0px 0px 1000px 0.5px #64ffda66;
+}
+#certificateimg{
+    display:none;
+}
+
+#inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+#inputs>div{
+    display: flex;
+    justify-content: stretch;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+}
+#inputs input[type="text"]{
+    width: calc(100% - 30px);
+    padding: 10px;
+    border: 1px solid #ccc4;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica;
+    font-weight: 500;
+    background: #ffffff0a;
+    color: #fff;
+}
+#inputs input[type="checkbox"]{
+    /* change height width of checkbox */
+    width: 20px;
+    height: 20px;
+}
