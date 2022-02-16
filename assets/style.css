@@ -78,6 +78,7 @@ main > div {
 }
 #asidebar {
   padding-top: 20px;
+  gap: 10px;
 }
 #certificatecanvas {
   width: 100%;
@@ -91,7 +92,6 @@ main > div {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
 }
 #inputs > div {
   display: flex;
@@ -115,4 +115,20 @@ main > div {
   /* change height width of checkbox */
   width: 20px;
   height: 20px;
+}
+
+#addinput {
+  font-size: 1em;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  background: #ffffff0a;
+  color: #fff;
+  margin: 0 10px;
+  border: 1px solid #ccc4;
+  border-radius: 5px;
+}
+.optionscontainer {
+  display: flex;
+  justify-content: center;
 }
