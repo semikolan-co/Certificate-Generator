@@ -102,10 +102,23 @@ document
       link.download = "certificate." + downloadType;
       link.href = image;
       link.click();
-    }
-    else if (downloadType == "pdf"){
+    } else if (downloadType == "pdf") {
       var pdf = new jsPDF();
-      pdf.addImage(canvas.toDataURL("image/png"), 'PNG', 0, 0);
-      pdf.save('certificate.pdf');
+      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0);
+      pdf.save("certificate.pdf");
     }
   });
+
+  document.getElementById("uploadimage").addEventListener("change", function () {
+    var file = document.getElementById("uploadimage").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      certImage.src = reader.result;
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      certImage.src = defaultCertPNG;
+    }
+  }
+);

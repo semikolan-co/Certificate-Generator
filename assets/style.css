@@ -56,16 +56,16 @@ main > div {
 #downloadbutton {
   font-size: 1em;
 }
-#uploadimage{
-    font-size: 1.5em;
-    margin: 0 20px;
-    text-align: center;
-    width: 100%;
-    padding: 10px;
+#uploadimage {
+  font-size: 1.5em;
+  margin: 0 20px;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
 }
-.uploadcontainer{
-    display: flex;
-    justify-content: center;
+.uploadcontainer {
+  display: flex;
+  justify-content: center;
 }
 .button {
   font-weight: 500;
@@ -76,8 +76,8 @@ main > div {
   color: #fff;
   cursor: pointer;
 }
-#asidebar{
-    padding-top: 20px;
+#asidebar {
+  padding-top: 20px;
 }
 #certificatecanvas {
   width: 100%;
