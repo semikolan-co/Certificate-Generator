@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Certificate Generator | CERRT | SemiKolan</title>
     <link rel="stylesheet" href="assets/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
     <header>
@@ -35,8 +38,14 @@
         <aside id="asidebar">
           <div id="editor"></div>
           <div class="uploadcontainer">
-              <!-- Limit only Image Files -->
-            <input id="uploadimage" type="file" class="button" value="Upload Image" accept="image/*" >
+            <!-- Limit only Image Files -->
+            <input
+              id="uploadimage"
+              type="file"
+              class="button"
+              value="Upload Image"
+              accept="image/*"
+            />
           </div>
           <div id="inputs">
             <div>
@@ -53,6 +62,7 @@
                 data-opacity="0.8"
                 class="certinputs"
               />
+              <button class="delbutton"><i class="fa fa-trash"></i></button>
             </div>
             <div>
               <input type="checkbox" />
@@ -68,6 +78,8 @@
                 data-opacity="0.8"
                 class="certinputs"
               />
+
+              <button class="delbutton"><i class="fa fa-trash"></i></button>
             </div>
             <div>
               <input type="checkbox" />
@@ -83,10 +95,11 @@
                 data-opacity="0.8"
                 class="certinputs"
               />
+              <button class="delbutton"><i class="fa fa-trash"></i></button>
             </div>
           </div>
           <div class="optionscontainer">
-              <button id="addinput" ><i class="fa fa-plus"></i> Add</button>
+            <button id="addinput"><i class="fa fa-plus"></i> Add</button>
           </div>
         </aside>
       </div>

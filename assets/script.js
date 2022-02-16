@@ -139,8 +139,18 @@ document.getElementById("addinput").addEventListener("click", function () {
    data-opacity="0.8"
    class="certinputs"
  />
+ <button class="delbutton"><i class="fa fa-trash"></i></button>
 </div>
  `;
   inputs.innerHTML += data;
   drawTextfromInputs();
 });
+
+var delbuttons = document.getElementsByClassName("delbutton")
+for (var i = 0; i < delbuttons.length; i++) {
+  delbuttons[i].addEventListener("click", function () {
+    var parent = this.parentNode;
+    parent.remove();
+    drawTextfromInputs();
+  });
+};

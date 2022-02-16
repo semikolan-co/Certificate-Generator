@@ -27,8 +27,8 @@ main > div {
 #asidebar {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  max-width: 400px;
+  width: 25%;
+  max-width: 500px;
   background: #ffffff0a;
 }
 #containerdiv {
@@ -116,7 +116,14 @@ main > div {
   width: 20px;
   height: 20px;
 }
-
+.delbutton{
+    background: #ffffff0a;
+    padding:10px;
+    border: 2px solid #ccc4;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
 #addinput {
   font-size: 1em;
   text-align: center;
