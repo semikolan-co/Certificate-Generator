@@ -109,16 +109,38 @@ document
     }
   });
 
-  document.getElementById("uploadimage").addEventListener("change", function () {
-    var file = document.getElementById("uploadimage").files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      certImage.src = reader.result;
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      certImage.src = defaultCertPNG;
-    }
+document.getElementById("uploadimage").addEventListener("change", function () {
+  var file = document.getElementById("uploadimage").files[0];
+  var reader = new FileReader();
+  reader.onloadend = function () {
+    certImage.src = reader.result;
+  };
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    certImage.src = defaultCertPNG;
   }
-);
+});
+
+document.getElementById("addinput").addEventListener("click", function () {
+  var inputs = document.getElementById("inputs");
+  var data = `
+ <div>
+ <input type="checkbox" />
+ <input
+   type="text"
+   value="Organization's Name"
+   data-fontsize="70"
+   data-font="'Open Sans', sans-serif"
+   data-textalign="left"
+   data-x="10"
+   data-y="10"
+   data-color="#000"
+   data-opacity="0.8"
+   class="certinputs"
+ />
+</div>
+ `;
+  inputs.innerHTML += data;
+  drawTextfromInputs();
+});
