@@ -37,6 +37,12 @@ function addListenerToInputs() {
 }
 
 function drawTextfromInputs() {
+  // Clearing Canvas with white background
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "black";
+
+
   ctx.drawImage(certImage, 0, 0, canvas.width, canvas.height);
 
   // Getting Inputs
