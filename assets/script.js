@@ -156,3 +156,12 @@ for (var i = 0; i < delbuttons.length; i++) {
     drawTextfromInputs();
   });
 };
+
+document.getElementById("fontsize").addEventListener("change", function () {
+  var checkedCheckboxes = document.getElementById("inputs").querySelectorAll("input:checked");
+  for (var i = 0; i < checkedCheckboxes.length; i++) {
+    checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset.fontsize = this.value;
+  }
+  drawTextfromInputs();
+
+});
