@@ -192,7 +192,7 @@ document.getElementById("textalign").addEventListener("change", function () {
   drawTextfromInputs();
 });
 
-document.getElementById("textcolor").addEventListener("change", function () {
+document.getElementById("textcolor").addEventListener("input", function () {
   // alert("Color Changed");
   var checkedCheckboxes = document
     .getElementById("inputs")
