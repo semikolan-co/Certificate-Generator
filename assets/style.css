@@ -139,3 +139,31 @@ main > div {
   display: flex;
   justify-content: center;
 }
+
+.toolscontainer{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding:10px;
+    background: #ffffff1a;
+}
+.toolscontainer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.toolscontainer select{
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc4;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica;
+    font-weight: 500;
+    background: #ffffff0a;
+    color: #fff;
+}
+.toolscontainer select option{
+    color: #000;
+}
