@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Setting Canvas Size
     canvas.width = certImage.width;
     canvas.height = certImage.height;
-
+    defaultFontSize = (canvas.width / 100);
+    console.log(defaultFontSize);
     drawTextfromInputs();
     addListenerToInputs();
   };
@@ -64,13 +65,14 @@ function addText(
   ctx = ctx,
   text = "Default Text",
   position = [0, 0],
-  fontSize = defaultFontSize,
+  fontSize = 5*defaultFontSize,
   font = defaultFont,
   textAlign = "center",
   opacity = 1
 ) {
   // Setting Font
-  ctx.font = fontSize + "px " + font;
+  ctx.font = (Number(fontSize)*defaultFontSize) + "px " + font;
+  console.log(ctx.font);
 
   // Setting Opacity
   ctx.globalAlpha = Number(opacity);
@@ -130,7 +132,7 @@ document.getElementById("addinput").addEventListener("click", function () {
  <input
    type="text"
    value="Organization's Name"
-   data-fontsize="70"
+   data-fontsize="5"
    data-font="'Open Sans', sans-serif"
    data-textalign="left"
    data-x="10"
