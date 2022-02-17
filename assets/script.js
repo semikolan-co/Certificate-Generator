@@ -2,6 +2,7 @@
 var defaultCertPNG = "certificates/dummy.png";
 var defaultFontSize = 20;
 var defaultFont = "Arial";
+var defaultColor = "black";
 
 // Defining Canvas
 var canvas = document.getElementById("certificatecanvas");
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Setting Canvas Size
     canvas.width = certImage.width;
     canvas.height = certImage.height;
-    defaultFontSize = (canvas.width / 100);
+    defaultFontSize = canvas.width / 100;
     console.log(defaultFontSize);
     drawTextfromInputs();
     addListenerToInputs();
@@ -42,7 +43,6 @@ function drawTextfromInputs() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "black";
 
-
   ctx.drawImage(certImage, 0, 0, canvas.width, canvas.height);
 
   // Getting Inputs
@@ -61,9 +61,10 @@ function drawTextfromInputs() {
     var font = textInput.dataset.font;
     var textAlign = textInput.dataset.textAlign;
     var opacity = textInput.dataset.opacity;
+    var color = textInput.dataset.color;
 
     // Adding Text
-    addText(ctx, text, position, fontSize, font, textAlign, opacity);
+    addText(ctx, text, position, fontSize, font, textAlign, opacity, color);
   }
 }
 
@@ -71,14 +72,18 @@ function addText(
   ctx = ctx,
   text = "Default Text",
   position = [0, 0],
-  fontSize = 5*defaultFontSize,
+  fontSize = 5 * defaultFontSize,
   font = defaultFont,
   textAlign = "center",
-  opacity = 1
+  opacity = 1,
+  color = defaultColor
 ) {
   // Setting Font
-  ctx.font = (Number(fontSize)*defaultFontSize) + "px " + font;
+  ctx.font = Number(fontSize) * defaultFontSize + "px " + font;
   console.log(ctx.font);
+
+  // Set color
+  ctx.fillStyle = color;
 
   // Setting Opacity
   ctx.globalAlpha = Number(opacity);
@@ -154,28 +159,49 @@ document.getElementById("addinput").addEventListener("click", function () {
   drawTextfromInputs();
 });
 
-var delbuttons = document.getElementsByClassName("delbutton")
+var delbuttons = document.getElementsByClassName("delbutton");
 for (var i = 0; i < delbuttons.length; i++) {
   delbuttons[i].addEventListener("click", function () {
     var parent = this.parentNode;
     parent.remove();
     drawTextfromInputs();
   });
-};
+}
 
 document.getElementById("fontsize").addEventListener("change", function () {
-  var checkedCheckboxes = document.getElementById("inputs").querySelectorAll("input:checked");
+  var checkedCheckboxes = document
+    .getElementById("inputs")
+    .querySelectorAll("input:checked");
   for (var i = 0; i < checkedCheckboxes.length; i++) {
-    checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset.fontsize = this.value;
+    checkedCheckboxes[i].parentNode.querySelector(
+      ".certinputs"
+    ).dataset.fontsize = this.value;
   }
   drawTextfromInputs();
-
 });
 
 document.getElementById("textalign").addEventListener("change", function () {
-  var checkedCheckboxes = document.getElementById("inputs").querySelectorAll("input:checked");
+  var checkedCheckboxes = document
+    .getElementById("inputs")
+    .querySelectorAll("input:checked");
   for (var i = 0; i < checkedCheckboxes.length; i++) {
-    checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset.textAlign = this.value;
+    checkedCheckboxes[i].parentNode.querySelector(
+      ".certinputs"
+    ).dataset.textAlign = this.value;
   }
   drawTextfromInputs();
 });
+
+document.getElementById("textcolor").addEventListener("change", function () {
+  // alert("Color Changed");
+  var checkedCheckboxes = document
+    .getElementById("inputs")
+    .querySelectorAll("input:checked");
+  for (var i = 0; i < checkedCheckboxes.length; i++) {
+    checkedCheckboxes[i].parentNode.querySelector(
+      ".certinputs"
+    ).dataset.color = this.value;
+  }
+  drawTextfromInputs();
+}
+);
