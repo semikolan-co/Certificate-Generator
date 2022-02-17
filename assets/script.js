@@ -171,3 +171,11 @@ document.getElementById("fontsize").addEventListener("change", function () {
   drawTextfromInputs();
 
 });
+
+document.getElementById("textalign").addEventListener("change", function () {
+  var checkedCheckboxes = document.getElementById("inputs").querySelectorAll("input:checked");
+  for (var i = 0; i < checkedCheckboxes.length; i++) {
+    checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset.textAlign = this.value;
+  }
+  drawTextfromInputs();
+});
