@@ -167,3 +167,19 @@ main > div {
 .toolscontainer select option{
     color: #000;
 }
+
+input[type="color"]{
+    aspect-ratio: 1/1;
+    padding: 1px;
+    height: 100%;
+    border: 1px solid #ccc4;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica;
+    font-weight: 500;
+    background: #ffffff0a;
+    color: #fff;
+}
+.colorpick-eyedropper-input-trigger{
+    display: none;
+}
