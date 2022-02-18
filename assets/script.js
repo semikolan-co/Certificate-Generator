@@ -37,6 +37,17 @@ function addListenerToInputs() {
       drawTextfromInputs();
     });
   }
+
+  var delbuttons = document.getElementsByClassName("delbutton");
+  for (var i = 0; i < delbuttons.length; i++) {
+    delbuttons[i].addEventListener("click", function () {
+      var parent = this.parentNode;
+      parent.remove();
+      drawTextfromInputs();
+    });
+  }
+
+
 }
 
 function drawTextfromInputs() {
@@ -141,7 +152,7 @@ document.getElementById("addinput").addEventListener("click", function () {
   var inputs = document.getElementById("inputs");
   var data = `
  <div>
- <input type="checkbox" />
+ <input type="checkbox"  class="certcheck" />
  <input
    type="text"
    value="Organization's Name"
@@ -158,40 +169,16 @@ document.getElementById("addinput").addEventListener("click", function () {
 </div>
  `;
   inputs.innerHTML += data;
+  addListenerToInputs();
   drawTextfromInputs();
 });
 
-var delbuttons = document.getElementsByClassName("delbutton");
-for (var i = 0; i < delbuttons.length; i++) {
-  delbuttons[i].addEventListener("click", function () {
-    var parent = this.parentNode;
-    parent.remove();
-    drawTextfromInputs();
-  });
-}
-
 document.getElementById("fontsize").addEventListener("change", function () {
-  var checkedCheckboxes = document
-    .getElementById("inputs")
-    .querySelectorAll("input:checked");
-  for (var i = 0; i < checkedCheckboxes.length; i++) {
-    checkedCheckboxes[i].parentNode.querySelector(
-      ".certinputs"
-    ).dataset.fontsize = this.value;
-  }
-  drawTextfromInputs();
+  updateDataset("fontsize", this.value);
 });
 
 document.getElementById("textalign").addEventListener("change", function () {
-  var checkedCheckboxes = document
-    .getElementById("inputs")
-    .querySelectorAll("input:checked");
-  for (var i = 0; i < checkedCheckboxes.length; i++) {
-    checkedCheckboxes[i].parentNode.querySelector(
-      ".certinputs"
-    ).dataset.textAlign = this.value;
-  }
-  drawTextfromInputs();
+  updateDataset("textalign", this.value);
 });
 
 document.getElementById("textcolor").addEventListener("input", function () {
@@ -211,9 +198,12 @@ function updateDataset(dataname, value, mode = "w") {
     if (mode == "a") {
       checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
         dataname
-      ] = Number(checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
-        dataname
-      ]) + Number(value);
+      ] =
+        Number(
+          checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
+            dataname
+          ]
+        ) + Number(value);
     } else {
       checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
         dataname
@@ -232,11 +222,11 @@ function loop() {
   if (!(x == 0 && y == 0)) {
     if (Math.abs(x - prevX) > 0.1) {
       prevX = x;
-      updateDataset("x", x*10, "a");
+      updateDataset("x", x * 10, "a");
     }
     if (Math.abs(y - prevY) > 0.1) {
       prevY = y;
-      updateDataset("y", y*10, "a");
+      updateDataset("y", y * 10, "a");
     }
   }
 }
