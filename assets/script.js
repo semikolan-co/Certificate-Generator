@@ -47,6 +47,12 @@ function addListenerToInputs() {
     });
   }
 
+  var checkboxes = document.getElementsByClassName("certcheck");
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("change", function () {
+      console.log(this.checked);
+    });
+  }
 
 }
 
