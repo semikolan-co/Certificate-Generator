@@ -99,9 +99,11 @@ function drawTextfromInputs() {
     var textAlign = textInput.dataset.textAlign;
     var opacity = textInput.dataset.opacity;
     var color = textInput.dataset.color;
+    var bold = textInput.dataset.bold;
+    var italic = textInput.dataset.italic;
 
     // Adding Text
-    addText(ctx, text, position, fontSize, font, textAlign, opacity, color);
+    addText(ctx, text, position, fontSize, font, textAlign, opacity, color, bold, italic);
   }
 }
 
@@ -113,11 +115,14 @@ function addText(
   font = defaultFont,
   textAlign = "center",
   opacity = 1,
-  color = defaultColor
+  color = defaultColor,
+  bold = false,
+  italic = false
 ) {
   // Setting Font
-  ctx.font = Number(fontSize) * defaultFontSize + "px " + font;
-  console.log(ctx.font);
+  ctx.font =  (Number(bold)? "bold ":"")+ (Number(italic)?"italic ":"") + Number(fontSize) * defaultFontSize + "px " + font;
+
+  
 
   // Set color
   ctx.fillStyle = color;
@@ -130,6 +135,7 @@ function addText(
 
   // Setting Text Position
   // ctx.textBaseline = "middle";
+
 
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
@@ -188,6 +194,8 @@ document.getElementById("addinput").addEventListener("click", function () {
    data-color="#000"
    data-opacity="0.8"
    class="certinputs"
+   data-bold="0"
+   data-italic="0"
  />
  <button class="delbutton"><i class="fa fa-trash"></i></button>
 </div>
