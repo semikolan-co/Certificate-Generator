@@ -50,8 +50,26 @@ function addListenerToInputs() {
   var checkboxes = document.getElementsByClassName("certcheck");
   for (var i = 0; i < checkboxes.length; i++) {
     checkboxes[i].addEventListener("change", function () {
-      console.log(this.checked);
+      updateEditorOptions();
+
     });
+  }
+
+}
+
+function updateEditorOptions() {
+  var checkedCheckboxes = document
+    .getElementById("inputs")
+    .querySelectorAll("input:checked");
+    
+  if(checkedCheckboxes.length === 1){
+    var selectionData = checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset
+    document.getElementById("fontfamily").value = selectionData.font;
+    document.getElementById("fontsize").value = selectionData.fontsize;
+    document.getElementById("textalign").value = selectionData.textalign;
+    document.getElementById("textcolor").value = selectionData.color;
+  }else{
+    // document.getElementById("editoroptions").style.display = "none";
   }
 
 }
