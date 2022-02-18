@@ -68,6 +68,8 @@ function updateEditorOptions() {
     document.getElementById("fontsize").value = selectionData.fontsize;
     document.getElementById("textalign").value = selectionData.textalign;
     document.getElementById("textcolor").value = selectionData.color;
+    document.getElementById("textbold").dataset.active = selectionData.bold;
+    document.getElementById("textitalic").dataset.active = selectionData.italic;
   }else{
     // document.getElementById("editoroptions").style.display = "none";
   }
