@@ -3,6 +3,8 @@ var defaultCertPNG = "certificates/dummy.png";
 var defaultFontSize = 20;
 var defaultFont = "Arial";
 var defaultColor = "black";
+var prevX = 0;
+var prevY = 0;
 
 // Defining Canvas
 var canvas = document.getElementById("certificatecanvas");
@@ -193,15 +195,47 @@ document.getElementById("textalign").addEventListener("change", function () {
 });
 
 document.getElementById("textcolor").addEventListener("input", function () {
+  updateDataset("color", this.value);
+});
+
+function updateDataset(dataname, value, mode = "a") {
   // alert("Color Changed");
   var checkedCheckboxes = document
     .getElementById("inputs")
     .querySelectorAll("input:checked");
   for (var i = 0; i < checkedCheckboxes.length; i++) {
-    checkedCheckboxes[i].parentNode.querySelector(
-      ".certinputs"
-    ).dataset.color = this.value;
+    if (mode == "a") {
+      checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
+        dataname
+      ] = Number(checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
+        dataname
+      ]) + Number(value);
+    } else {
+      checkedCheckboxes[i].parentNode.querySelector(".certinputs").dataset[
+        dataname
+      ] = value;
+    }
   }
   drawTextfromInputs();
 }
-);
+
+let myStick = new JoystickController("stick", 64, 8);
+function loop() {
+  requestAnimationFrame(loop);
+  // Get current values
+  let x = myStick.value.x;
+  let y = myStick.value.y;
+  if (!(x == 0 && y == 0)) {
+    if (Math.abs(x - prevX) > 0.1) {
+      prevX = x;
+      prevY = y;
+      updateDataset("x", x*10, "a");
+    }
+    if (Math.abs(y - prevY) > 0.1) {
+      prevX = x;
+      prevY = y;
+      updateDataset("y", y*10, "a");
+    }
+  }
+}
+loop();
