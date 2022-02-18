@@ -198,7 +198,11 @@ document.getElementById("textcolor").addEventListener("input", function () {
   updateDataset("color", this.value);
 });
 
-function updateDataset(dataname, value, mode = "a") {
+document.getElementById("fontfamily").addEventListener("change", function () {
+  updateDataset("font", this.value);
+});
+
+function updateDataset(dataname, value, mode = "w") {
   // alert("Color Changed");
   var checkedCheckboxes = document
     .getElementById("inputs")
