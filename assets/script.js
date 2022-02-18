@@ -221,6 +221,16 @@ document.getElementById("fontfamily").addEventListener("change", function () {
   updateDataset("font", this.value);
 });
 
+document.getElementById("textbold").addEventListener("click", function () {
+  updateDataset("bold", this.dataset.active);
+  this.dataset.active = Number(this.dataset.active) ? 0 : 1;
+});
+
+document.getElementById("textitalic").addEventListener("click", function () {
+  updateDataset("italic", this.dataset.active);
+  this.dataset.active = Number(this.dataset.active) ? 0 : 1;
+});
+
 function updateDataset(dataname, value, mode = "w") {
   // alert("Color Changed");
   var checkedCheckboxes = document
