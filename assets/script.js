@@ -228,11 +228,9 @@ function loop() {
   if (!(x == 0 && y == 0)) {
     if (Math.abs(x - prevX) > 0.1) {
       prevX = x;
-      prevY = y;
       updateDataset("x", x*10, "a");
     }
     if (Math.abs(y - prevY) > 0.1) {
-      prevX = x;
       prevY = y;
       updateDataset("y", y*10, "a");
     }
