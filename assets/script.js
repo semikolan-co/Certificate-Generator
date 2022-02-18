@@ -224,13 +224,13 @@ document.getElementById("fontfamily").addEventListener("change", function () {
 });
 
 document.getElementById("textbold").addEventListener("click", function () {
-  updateDataset("bold", this.dataset.active);
   this.dataset.active = Number(this.dataset.active) ? 0 : 1;
+  updateDataset("bold", this.dataset.active);
 });
 
 document.getElementById("textitalic").addEventListener("click", function () {
-  updateDataset("italic", this.dataset.active);
   this.dataset.active = Number(this.dataset.active) ? 0 : 1;
+  updateDataset("italic", this.dataset.active);
 });
 
 function updateDataset(dataname, value, mode = "w") {
