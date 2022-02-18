@@ -179,3 +179,24 @@ input[type="color"] {
 .colorpick-eyedropper-input-trigger {
   display: none;
 }
+
+.formattool{
+  padding: 5px 10px;
+  font-size:1.1em;
+  background: #ffffff1a;
+  border: 1px solid #ccc4;
+  border-radius: 5px;
+  color: #fff;
+}
+.formattool[data-active="1"]{
+  background: #fff;
+  color: #000;
+}
+#textbold{
+  font-weight: bold;
+}
+#textitalic{
+  font-style: italic;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 800;
+}
