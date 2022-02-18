@@ -116,13 +116,13 @@ main > div {
   width: 20px;
   height: 20px;
 }
-.delbutton{
-    background: #ffffff0a;
-    padding:10px;
-    border: 2px solid #ccc4;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
+.delbutton {
+  background: #ffffff0a;
+  padding: 10px;
+  border: 2px solid #ccc4;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
 }
 #addinput {
   font-size: 1em;
@@ -140,46 +140,42 @@ main > div {
   justify-content: center;
 }
 
-.toolscontainer{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding:10px;
-    background: #ffffff1a;
+.toolscontainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: #ffffff1a;
 }
 .toolscontainer > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
-.toolscontainer select{
-    width: 100%;
-    padding: 5px 10px;
-    border: 1px solid #ccc4;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica;
-    font-weight: 500;
-    background: #ffffff0a;
-    color: #fff;
+.toolscontainer select {
+  /* width: 100%; */
+  padding: 5px 10px;
+  border: 1px solid #ccc4;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica;
+  font-weight: 500;
+  background: #ffffff0a;
+  color: #fff;
 }
-.toolscontainer select option{
-    color: #000;
+.toolscontainer select option {
+  color: #000;
 }
 
-input[type="color"]{
-    aspect-ratio: 1/1;
-    padding: 1px;
-    height: 100%;
-    border: 1px solid #ccc4;
-    border-radius: 5px;
-    font-size: 16px;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica;
-    font-weight: 500;
-    background: #ffffff0a;
-    color: #fff;
+input[type="color"] {
+  height: 100%;
+  aspect-ratio: 8/6;
+  padding: 1px;
+  border: 1px solid #ccc4;
+  border-radius: 5px;
+  background: #ffffff0a;
 }
-.colorpick-eyedropper-input-trigger{
-    display: none;
+.colorpick-eyedropper-input-trigger {
+  display: none;
 }
