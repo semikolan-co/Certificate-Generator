@@ -130,7 +130,7 @@ function addText(
   ctx.fillStyle = color;
 
   // Setting Opacity
-  ctx.globalAlpha = Number(opacity);
+  ctx.globalAlpha = Number(opacity) / 100;
 
   // Setting Text Alignment
   ctx.textAlign = textAlign;
@@ -194,7 +194,7 @@ document.getElementById("addinput").addEventListener("click", function () {
    data-x="10"
    data-y="10"
    data-color="#000"
-   data-opacity="0.8"
+   data-opacity="80"
    class="certinputs"
    data-bold="0"
    data-italic="0"
@@ -231,6 +231,10 @@ document.getElementById("textbold").addEventListener("click", function () {
 document.getElementById("textitalic").addEventListener("click", function () {
   this.dataset.active = Number(this.dataset.active) ? 0 : 1;
   updateDataset("italic", this.dataset.active);
+});
+
+document.getElementById("textopacity").addEventListener("input", function () {
+  updateDataset("opacity", this.value);
 });
 
 function updateDataset(dataname, value, mode = "w") {
