@@ -98,7 +98,7 @@ function drawTextfromInputs() {
     var position = [textInput.dataset.x, textInput.dataset.y];
     var fontSize = textInput.dataset.fontsize;
     var font = textInput.dataset.font;
-    var textAlign = textInput.dataset.textAlign;
+    var textAlign = textInput.dataset.textalign;
     var opacity = textInput.dataset.opacity;
     var color = textInput.dataset.color;
     var bold = textInput.dataset.bold;
