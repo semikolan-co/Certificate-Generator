@@ -70,6 +70,7 @@ function updateEditorOptions() {
     document.getElementById("textcolor").value = selectionData.color;
     document.getElementById("textbold").dataset.active = selectionData.bold;
     document.getElementById("textitalic").dataset.active = selectionData.italic;
+    document.getElementById("textopacity").value = selectionData.opacity;
   }else{
     // document.getElementById("editoroptions").style.display = "none";
   }
