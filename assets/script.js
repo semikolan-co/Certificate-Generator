@@ -11,6 +11,22 @@ var canvas = document.getElementById("certificatecanvas");
 var ctx = canvas.getContext("2d");
 var certImage = new Image();
 
+// Defining DOM Elements
+var Inputs = document.getElementById("inputs");
+var downloadTypeButton = document.getElementById("downloadtype");
+var downloadButton = document.getElementById("downloadbutton");
+var imageFileInput = document.getElementById("uploadimage");
+var addInputButton = document.getElementById("addinput");
+var Editor = {
+  font: document.getElementById("fontfamily"),
+  fontsize: document.getElementById("fontsize"),
+  textalign: document.getElementById("textalign"),
+  color: document.getElementById("textcolor"),
+  bold: document.getElementById("textbold"),
+  italic: document.getElementById("textitalic"),
+  opacity: document.getElementById("textopacity")
+};
+
 // On Document Load
 document.addEventListener("DOMContentLoaded", function () {
   // Creating Image from PNG file
@@ -51,30 +67,25 @@ function addListenerToInputs() {
   for (var i = 0; i < checkboxes.length; i++) {
     checkboxes[i].addEventListener("change", function () {
       updateEditorOptions();
-
     });
   }
-
 }
 
 function updateEditorOptions() {
-  var checkedCheckboxes = document
-    .getElementById("inputs")
-    .querySelectorAll("input:checked");
-    
-  if(checkedCheckboxes.length === 1){
-    var selectionData = checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset
-    document.getElementById("fontfamily").value = selectionData.font;
-    document.getElementById("fontsize").value = selectionData.fontsize;
-    document.getElementById("textalign").value = selectionData.textalign;
-    document.getElementById("textcolor").value = selectionData.color;
-    document.getElementById("textbold").dataset.active = selectionData.bold;
-    document.getElementById("textitalic").dataset.active = selectionData.italic;
-    document.getElementById("textopacity").value = selectionData.opacity;
-  }else{
-    // document.getElementById("editoroptions").style.display = "none";
-  }
+  var checkedCheckboxes = Inputs.querySelectorAll("input:checked");
 
+  if (checkedCheckboxes.length === 1) {
+    var selectionData = checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
+    Editor.font.value = selectionData.font;
+    Editor.fontsize.value = selectionData.fontsize;
+    Editor.textalign.value = selectionData.textalign;
+    Editor.color.value = selectionData.color;
+    Editor.bold.dataset.active = selectionData.bold;
+    Editor.italic.dataset.active = selectionData.italic;
+    Editor.opacity.value = selectionData.opacity;
+  } else {
+    // Do Nothing
+  }
 }
 
 function drawTextfromInputs() {
@@ -106,7 +117,18 @@ function drawTextfromInputs() {
     var italic = textInput.dataset.italic;
 
     // Adding Text
-    addText(ctx, text, position, fontSize, font, textAlign, opacity, color, bold, italic);
+    addText(
+      ctx,
+      text,
+      position,
+      fontSize,
+      font,
+      textAlign,
+      opacity,
+      color,
+      bold,
+      italic
+    );
   }
 }
 
@@ -123,9 +145,12 @@ function addText(
   italic = false
 ) {
   // Setting Font
-  ctx.font =  (Number(bold)? "bold ":"")+ (Number(italic)?"italic ":"") + Number(fontSize) * defaultFontSize + "px " + font;
-
-  
+  ctx.font =
+    (Number(bold) ? "bold " : "") +
+    (Number(italic) ? "italic " : "") +
+    Number(fontSize) * defaultFontSize +
+    "px " +
+    font;
 
   // Set color
   ctx.fillStyle = color;
@@ -139,18 +164,15 @@ function addText(
   // Setting Text Position
   // ctx.textBaseline = "middle";
 
-
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
   const yPos = Number(position[1] * (canvas.height / 100));
   ctx.fillText(text, xPos, yPos);
 }
 
-document
-  .getElementById("downloadbutton")
-  .addEventListener("click", function () {
+downloadButton.addEventListener("click", function () {
     // Getting the Download Type
-    var downloadType = document.getElementById("downloadtype").value;
+    var downloadType = downloadTypeButton.value;
 
     if (downloadType == "png" || downloadType == "jpg") {
       // Creating Image from Canvas
@@ -168,8 +190,8 @@ document
     }
   });
 
-document.getElementById("uploadimage").addEventListener("change", function () {
-  var file = document.getElementById("uploadimage").files[0];
+imageFileInput.addEventListener("change", function () {
+  var file = imageFileInput.files[0];
   var reader = new FileReader();
   reader.onloadend = function () {
     certImage.src = reader.result;
@@ -181,8 +203,7 @@ document.getElementById("uploadimage").addEventListener("change", function () {
   }
 });
 
-document.getElementById("addinput").addEventListener("click", function () {
-  var inputs = document.getElementById("inputs");
+addInputButton.addEventListener("click", function () {
   var data = `
  <div>
  <input type="checkbox"  class="certcheck" />
@@ -203,38 +224,38 @@ document.getElementById("addinput").addEventListener("click", function () {
  <button class="delbutton"><i class="fa fa-trash"></i></button>
 </div>
  `;
-  inputs.innerHTML += data;
+  Inputs.innerHTML += data;
   addListenerToInputs();
   drawTextfromInputs();
 });
 
-document.getElementById("fontsize").addEventListener("change", function () {
+Editor.fontsize.addEventListener("change", function () {
   updateDataset("fontsize", this.value);
 });
 
-document.getElementById("textalign").addEventListener("change", function () {
+Editor.textalign.addEventListener("change", function () {
   updateDataset("textalign", this.value);
 });
 
-document.getElementById("textcolor").addEventListener("input", function () {
+Editor.color.addEventListener("input", function () {
   updateDataset("color", this.value);
 });
 
-document.getElementById("fontfamily").addEventListener("change", function () {
+Editor.font.addEventListener("change", function () {
   updateDataset("font", this.value);
 });
 
-document.getElementById("textbold").addEventListener("click", function () {
+Editor.bold.addEventListener("click", function () {
   this.dataset.active = Number(this.dataset.active) ? 0 : 1;
   updateDataset("bold", this.dataset.active);
 });
 
-document.getElementById("textitalic").addEventListener("click", function () {
+Editor.italic.addEventListener("click", function () {
   this.dataset.active = Number(this.dataset.active) ? 0 : 1;
   updateDataset("italic", this.dataset.active);
 });
 
-document.getElementById("textopacity").addEventListener("input", function () {
+Editor.opacity.addEventListener("input", function () {
   updateDataset("opacity", this.value);
 });
 
