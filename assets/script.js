@@ -75,7 +75,8 @@ function updateEditorOptions() {
   var checkedCheckboxes = Inputs.querySelectorAll("input:checked");
 
   if (checkedCheckboxes.length === 1) {
-    var selectionData = checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
+    var selectionData =
+      checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
     Editor.font.value = selectionData.font;
     Editor.fontsize.value = selectionData.fontsize;
     Editor.textalign.value = selectionData.textalign;
@@ -127,7 +128,8 @@ function drawTextfromInputs() {
       opacity,
       color,
       bold,
-      italic
+      italic,
+      textInputs[i]
     );
   }
 }
@@ -142,7 +144,8 @@ function addText(
   opacity = 1,
   color = defaultColor,
   bold = false,
-  italic = false
+  italic = false,
+  dom
 ) {
   // Setting Font
   ctx.font =
@@ -162,7 +165,14 @@ function addText(
   ctx.textAlign = textAlign;
 
   // Setting Text Position
-  // ctx.textBaseline = "middle";
+  ctx.textBaseline = "top";
+
+  // Measure Height & Width of Text
+  var textWidth = ctx.measureText(text).width * (100 / canvas.width);
+  var textHeight = fontSize;
+  dom.dataset.width = textWidth;
+  dom.dataset.height = textHeight;
+  // console.log(textWidth,textHeight);
 
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
@@ -171,24 +181,24 @@ function addText(
 }
 
 downloadButton.addEventListener("click", function () {
-    // Getting the Download Type
-    var downloadType = downloadTypeButton.value;
+  // Getting the Download Type
+  var downloadType = downloadTypeButton.value;
 
-    if (downloadType == "png" || downloadType == "jpg") {
-      // Creating Image from Canvas
-      var image = canvas.toDataURL("image/" + downloadType);
+  if (downloadType == "png" || downloadType == "jpg") {
+    // Creating Image from Canvas
+    var image = canvas.toDataURL("image/" + downloadType);
 
-      // Creating Download Link
-      var link = document.createElement("a");
-      link.download = "certificate." + downloadType;
-      link.href = image;
-      link.click();
-    } else if (downloadType == "pdf") {
-      var pdf = new jsPDF();
-      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0);
-      pdf.save("certificate.pdf");
-    }
-  });
+    // Creating Download Link
+    var link = document.createElement("a");
+    link.download = "certificate." + downloadType;
+    link.href = image;
+    link.click();
+  } else if (downloadType == "pdf") {
+    var pdf = new jsPDF();
+    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0);
+    pdf.save("certificate.pdf");
+  }
+});
 
 imageFileInput.addEventListener("change", function () {
   var file = imageFileInput.files[0];
@@ -301,3 +311,123 @@ function loop() {
   }
 }
 loop();
+
+var canvasOffset = canvas.getBoundingClientRect();
+var offsetX = canvasOffset.left;
+var offsetY = canvasOffset.top;
+var scrollX = window.pageXOffset;
+var scrollY = window.pageYOffset;
+
+//  On Window Resize event
+window.addEventListener("resize", function () {
+  canvasOffset = canvas.getBoundingClientRect();
+  offsetX = canvasOffset.left;
+  offsetY = canvasOffset.top;
+});
+
+//
+var startX;
+var startY;
+
+// this var will hold the index of the hit-selected text
+var selectedElement = null;
+
+// test if x,y is inside the bounding box of texts[textIndex]
+function textHittest(x, y, dom) {
+  // console.log(canvasOffset.height);
+  var data = dom.dataset;
+  var posX = Number(data.x);
+  var posY = Number(data.y);
+  var width = Number(data.width);
+  var height = Number(data.height);
+
+  var yCheck = y >= posY  && y <= posY + height;
+  if (data.textalign == "center") {
+    var xCheck = x >= posX - width / 2 && x <= posX + width / 2;
+  } else if (data.textalign == "right") {
+    var xCheck = x >= posX - width && x <= posX;
+  } else {
+    var xCheck = x >= posX && x <= posX + width;
+  }
+
+  if (xCheck && yCheck) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function handleMouseDown(e) {
+  e.preventDefault();
+  startX = parseInt(e.clientX - offsetX);
+  startY = parseInt(e.clientY - offsetY);
+
+  // Mapped x and y between 0-100
+  startX = (startX / canvasOffset.width) * 100;
+  startY = (startY / canvas.getBoundingClientRect().height) * 100;
+
+  var certInputs = Inputs.getElementsByClassName("certinputs");
+  for (var i = 0; i < certInputs.length; i++) {
+    // console.log(certInputs[i]);
+
+    if (textHittest(startX, startY, certInputs[i])) {
+      // change Cursor to Pointer
+      canvas.style.cursor = "pointer";
+      selectedElement = certInputs[i];
+    }
+  }
+}
+
+// done dragging
+function handleMouseUp(e) {
+  e.preventDefault();
+  selectedElement = null;
+  canvas.style.cursor = "default";
+  // console.log("mouse up");
+}
+
+// also done dragging
+function handleMouseOut(e) {
+  e.preventDefault();
+  selectedElement = null;
+  canvas.style.cursor = "default";
+  // console.log("mouse out");
+}
+
+
+
+function handleMouseMove(e) {
+  if (!selectedElement) {
+      return;
+  }
+  e.preventDefault();
+  mouseX = parseInt(e.clientX - offsetX);
+  mouseY = parseInt(e.clientY - offsetY);
+
+  mouseX = (mouseX / canvasOffset.width) * 100;
+  mouseY = (mouseY / canvas.getBoundingClientRect().height) * 100;
+  // Put your mousemove stuff here
+  var dx = mouseX - startX;
+  var dy = mouseY - startY;
+  // console.log(dx, dy);
+  startX = mouseX;
+  startY = mouseY;
+  selectedElement.dataset.x = Number(selectedElement.dataset.x) + dx;
+  selectedElement.dataset.y = Number(selectedElement.dataset.y) + dy;
+  drawTextfromInputs();
+  // console.log("mouse move");
+}
+
+// listen for mouse events
+canvas.addEventListener("mousedown", function (e) {
+  handleMouseDown(e);
+});
+canvas.addEventListener("mousemove", function (e) {
+  handleMouseMove(e);
+});
+canvas.addEventListener("mouseup", function (e) {
+  handleMouseUp(e);
+});
+canvas.addEventListener("mouseout", function (e) {
+  handleMouseOut(e);
+});
