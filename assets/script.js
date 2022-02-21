@@ -11,6 +11,17 @@ var canvas = document.getElementById("certificatecanvas");
 var ctx = canvas.getContext("2d");
 var certImage = new Image();
 
+
+
+
+var canvasOffset = canvas.getBoundingClientRect();
+var offsetX = canvasOffset.left;
+var offsetY = canvasOffset.top;
+var scrollX = window.pageXOffset;
+var scrollY = window.pageYOffset;
+
+
+
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
 var downloadTypeButton = document.getElementById("downloadtype");
@@ -26,6 +37,11 @@ var Editor = {
   italic: document.getElementById("textitalic"),
   opacity: document.getElementById("textopacity")
 };
+
+
+
+
+
 
 // On Document Load
 document.addEventListener("DOMContentLoaded", function () {
@@ -131,6 +147,27 @@ function drawTextfromInputs() {
       italic,
       textInputs[i]
     );
+  }
+  if(selectedElement != null){
+    // Create Rectange over Selected Element
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 5;
+    var x= selectedElement.dataset.x;
+    var y= selectedElement.dataset.y;
+    var width = selectedElement.dataset.width;
+    var height = selectedElement.dataset.height;
+    var fontSize = selectedElement.dataset.fontsize;
+    var sW = canvas.width/100;
+    var sH = canvas.height/100;
+    if(selectedElement.dataset.textalign == 'center'){
+      x = x - width/2;  
+    }
+    else if(selectedElement.dataset.textalign == 'right'){
+      x = x - width;  
+    }
+
+    ctx.strokeRect((x-1) * sW, (y-2) * sH, (width * sW)+(0.5*fontSize*defaultFontSize), (height * sH) + (0.5*fontSize*defaultFontSize));
+
   }
 }
 
@@ -311,13 +348,6 @@ function loop() {
   }
 }
 loop();
-
-var canvasOffset = canvas.getBoundingClientRect();
-var offsetX = canvasOffset.left;
-var offsetY = canvasOffset.top;
-var scrollX = window.pageXOffset;
-var scrollY = window.pageYOffset;
-
 //  On Window Resize event
 window.addEventListener("resize", function () {
   canvasOffset = canvas.getBoundingClientRect();
@@ -325,12 +355,6 @@ window.addEventListener("resize", function () {
   offsetY = canvasOffset.top;
 });
 
-//
-var startX;
-var startY;
-
-// this var will hold the index of the hit-selected text
-var selectedElement = null;
 
 // test if x,y is inside the bounding box of texts[textIndex]
 function textHittest(x, y, dom) {
