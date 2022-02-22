@@ -148,8 +148,8 @@ function drawTextfromInputs() {
 
 function drawBorderForSelected() {
   // Create Rectange over Selected Element
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 5;
+  ctx.strokeStyle = "#0B082F";
+  ctx.lineWidth = 8;
   var x = selectedElement.dataset.x;
   var y = selectedElement.dataset.y;
   var width = selectedElement.dataset.width;
@@ -163,12 +163,25 @@ function drawBorderForSelected() {
     x = x - width;
   }
 
-  ctx.strokeRect(
-    (x - 1) * sW,
-    (y - 2) * sH,
-    (Number(width) + 2) * sW,
-    (Number(height)+4) * sH
-  );
+  var x1 = (x - 1) * sW;
+  var y1 = (y - 2) * sH;
+  var x2 = (Number(width) + 2) * sW;
+  var y2 = (Number(height) + 4) * sH;
+  ctx.strokeRect(x1, y1, x2, y2);
+
+  ctx.fillStyle = "white";
+  drawCircle(x1, y1);
+  drawCircle(x1 + x2, y1);
+  drawCircle(x1, y1 + y2);
+  drawCircle(x1 + x2, y1 + y2);
+
+  function drawCircle(x, y, r = 15) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2, false);
+    ctx.fill();
+    ctx.stroke();
+  }
+
   console.log(sW, sH, defaultFontSize, width);
 }
 
