@@ -85,7 +85,8 @@ function updateEditorOptions() {
 
   if (checkedCheckboxes.length === 1) {
     var selectionData =
-      checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
+    checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
+    selectedElement = checkedCheckboxes[0].parentNode.querySelector(".certinputs");
     Editor.font.value = selectionData.font;
     Editor.fontsize.value = selectionData.fontsize;
     Editor.textalign.value = selectionData.textalign;
@@ -95,7 +96,9 @@ function updateEditorOptions() {
     Editor.opacity.value = selectionData.opacity;
   } else {
     // Do Nothing
+    selectedElement = null;
   }
+  drawTextfromInputs(); 
 }
 
 function drawTextfromInputs() {
