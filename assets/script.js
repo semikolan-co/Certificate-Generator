@@ -420,6 +420,7 @@ function handleMouseUp(e) {
   e.preventDefault();
   selectedElement = null;
   canvas.style.cursor = "default";
+  drawTextfromInputs(); 
   // console.log("mouse up");
 }
 
@@ -428,6 +429,7 @@ function handleMouseOut(e) {
   e.preventDefault();
   selectedElement = null;
   canvas.style.cursor = "default";
+  drawTextfromInputs();
   // console.log("mouse out");
 }
 
