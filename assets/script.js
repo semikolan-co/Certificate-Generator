@@ -11,16 +11,14 @@ var canvas = document.getElementById("certificatecanvas");
 var ctx = canvas.getContext("2d");
 var certImage = new Image();
 
-
-
-
 var canvasOffset = canvas.getBoundingClientRect();
 var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
 var scrollX = window.pageXOffset;
 var scrollY = window.pageYOffset;
-
-
+var startX = 0;
+var startY = 0;
+var selectedElement = null;
 
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
@@ -37,11 +35,6 @@ var Editor = {
   italic: document.getElementById("textitalic"),
   opacity: document.getElementById("textopacity")
 };
-
-
-
-
-
 
 // On Document Load
 document.addEventListener("DOMContentLoaded", function () {
@@ -148,27 +141,35 @@ function drawTextfromInputs() {
       textInputs[i]
     );
   }
-  if(selectedElement != null){
-    // Create Rectange over Selected Element
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 5;
-    var x= selectedElement.dataset.x;
-    var y= selectedElement.dataset.y;
-    var width = selectedElement.dataset.width;
-    var height = selectedElement.dataset.height;
-    var fontSize = selectedElement.dataset.fontsize;
-    var sW = canvas.width/100;
-    var sH = canvas.height/100;
-    if(selectedElement.dataset.textalign == 'center'){
-      x = x - width/2;  
-    }
-    else if(selectedElement.dataset.textalign == 'right'){
-      x = x - width;  
-    }
-
-    ctx.strokeRect((x-1) * sW, (y-2) * sH, (width * sW)+(0.5*fontSize*defaultFontSize), (height * sH) + (0.5*fontSize*defaultFontSize));
-
+  if (selectedElement != null) {
+    drawBorderForSelected();
   }
+}
+
+function drawBorderForSelected() {
+  // Create Rectange over Selected Element
+  ctx.strokeStyle = "red";
+  ctx.lineWidth = 5;
+  var x = selectedElement.dataset.x;
+  var y = selectedElement.dataset.y;
+  var width = selectedElement.dataset.width;
+  var height = selectedElement.dataset.height;
+  var fontSize = selectedElement.dataset.fontsize;
+  var sW = canvas.width / 100;
+  var sH = canvas.height / 100;
+  if (selectedElement.dataset.textalign == "center") {
+    x = x - width / 2;
+  } else if (selectedElement.dataset.textalign == "right") {
+    x = x - width;
+  }
+
+  ctx.strokeRect(
+    (x - 1) * sW,
+    (y - 2) * sH,
+    (Number(width) + 2) * sW,
+    (Number(height)+4) * sH
+  );
+  console.log(sW, sH, defaultFontSize, width);
 }
 
 function addText(
@@ -355,7 +356,6 @@ window.addEventListener("resize", function () {
   offsetY = canvasOffset.top;
 });
 
-
 // test if x,y is inside the bounding box of texts[textIndex]
 function textHittest(x, y, dom) {
   // console.log(canvasOffset.height);
@@ -365,7 +365,7 @@ function textHittest(x, y, dom) {
   var width = Number(data.width);
   var height = Number(data.height);
 
-  var yCheck = y >= posY  && y <= posY + height;
+  var yCheck = y >= posY && y <= posY + height;
   if (data.textalign == "center") {
     var xCheck = x >= posX - width / 2 && x <= posX + width / 2;
   } else if (data.textalign == "right") {
@@ -418,11 +418,9 @@ function handleMouseOut(e) {
   // console.log("mouse out");
 }
 
-
-
 function handleMouseMove(e) {
   if (!selectedElement) {
-      return;
+    return;
   }
   e.preventDefault();
   mouseX = parseInt(e.clientX - offsetX);
