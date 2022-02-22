@@ -235,6 +235,10 @@ function addText(
 }
 
 downloadButton.addEventListener("click", function () {
+
+  selectedElement = null;
+  drawTextfromInputs();
+
   // Getting the Download Type
   var downloadType = downloadTypeButton.value;
 
