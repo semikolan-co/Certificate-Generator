@@ -20,9 +20,12 @@ header {
   background: linear-gradient(to right, #1d024b, rgb(6, 77, 117));
   color: #fff;
 }
-main > div {
+main{
+  display:flex;
+  flex-direction:column;
+}
+main > div:nth-child(2) {
   display: flex;
-  min-height: calc(100vh - 62px);
 }
 #asidebar {
   display: flex;
@@ -240,4 +243,26 @@ input[type="color"] {
   background:white;
   mix-blend-mode:exclusion;
   cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  main{
+    flex-direction: column-reverse;
+  }
+  main>div:nth-child(2){
+    flex-direction:column;
+  }
+  #asidebar{
+    width: 100%;
+    max-width: 100%;
+    margin: 5% 0;
+  }
+  .toolscontainer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #0f0941;
+    z-index: 2;
+  }
+
 }
