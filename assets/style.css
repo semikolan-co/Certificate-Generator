@@ -148,6 +148,7 @@ main > div:nth-child(2) {
   justify-content: center;
   gap: 10px;
   padding: 10px;
+  flex-wrap: wrap;
   background: #ffffff1a;
 }
 .toolscontainer > div {
@@ -263,6 +264,10 @@ input[type="color"] {
     width: 100%;
     background-color: #0f0941;
     z-index: 2;
+    flex-direction: column;
+  }
+  .slidecontainer{
+    width: auto;
   }
 
 }
