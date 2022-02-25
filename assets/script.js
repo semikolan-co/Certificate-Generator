@@ -19,6 +19,7 @@ var scrollY = window.pageYOffset;
 var startX = 0;
 var startY = 0;
 var selectedElement = null;
+var dragMode = false;
 
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
@@ -85,8 +86,9 @@ function updateEditorOptions() {
 
   if (checkedCheckboxes.length === 1) {
     var selectionData =
-    checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
-    selectedElement = checkedCheckboxes[0].parentNode.querySelector(".certinputs");
+      checkedCheckboxes[0].parentNode.querySelector(".certinputs").dataset;
+    selectedElement =
+      checkedCheckboxes[0].parentNode.querySelector(".certinputs");
     Editor.font.value = selectionData.font;
     Editor.fontsize.value = selectionData.fontsize;
     Editor.textalign.value = selectionData.textalign;
@@ -98,7 +100,7 @@ function updateEditorOptions() {
     // Do Nothing
     selectedElement = null;
   }
-  drawTextfromInputs(); 
+  drawTextfromInputs();
 }
 
 function drawTextfromInputs() {
@@ -235,7 +237,6 @@ function addText(
 }
 
 downloadButton.addEventListener("click", function () {
-
   selectedElement = null;
   drawTextfromInputs();
 
@@ -427,7 +428,7 @@ function handleMouseUp(e) {
   e.preventDefault();
   selectedElement = null;
   canvas.style.cursor = "default";
-  drawTextfromInputs(); 
+  drawTextfromInputs();
   // console.log("mouse up");
 }
 
@@ -464,14 +465,21 @@ function handleMouseMove(e) {
 
 // listen for mouse events
 canvas.addEventListener("mousedown", function (e) {
+  dragMode = true;
   handleMouseDown(e);
 });
 canvas.addEventListener("mousemove", function (e) {
-  handleMouseMove(e);
+  if (dragMode) {
+    handleMouseMove(e);
+  }
 });
 canvas.addEventListener("mouseup", function (e) {
+  dragMode = false;
   handleMouseUp(e);
 });
 canvas.addEventListener("mouseout", function (e) {
-  handleMouseOut(e);
+  if (dragMode) {
+    handleMouseOut(e);
+    dragMode = false;
+  }
 });
