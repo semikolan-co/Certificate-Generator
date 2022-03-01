@@ -24,6 +24,8 @@ var dragMode = false;
 // Defining Sheet Stuffs
 var titles = null;
 var sheetData = null;
+// var progress = document.getElementById("progress");
+var loaderbody = document.querySelector(".loaderbody");
 
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
@@ -563,11 +565,16 @@ function to_json(workbook) {
 // ----------------------------------------------
 
 downloadZipButton.addEventListener("click", function (e) {
+
+  // Start recording Time
+  
   console.log("Downloading Zip");
   
+  loaderbody.style.display = "flex";
 
   var zip = new JSZip();
   var count = 0;
+  var totalRows = sheetData.length;
   var zipFilename = "CERRT_SemiKolan.zip";
   var effectiveDOMs = []
   var dataIndex = []
@@ -581,9 +588,8 @@ downloadZipButton.addEventListener("click", function (e) {
   });
 
   sheetData.forEach(function (row, i) {
-    // Updating Canvas with new data
-  
-    // console.log(effectiveDOMs[0].value ,row[dataIndex[0]]);
+
+
     effectiveDOMs.forEach(function (dom, j) {
       dom.value = row[dataIndex[j]];
     });
@@ -608,4 +614,5 @@ downloadZipButton.addEventListener("click", function (e) {
       }
     );
   });
+  loaderbody.style.display = "none";
 });

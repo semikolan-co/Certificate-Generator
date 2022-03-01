@@ -309,8 +309,9 @@ input[type="file"]{
   height: 100%;
   background: #000c;
   z-index: 9;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   font-size: 4em;
+
 }
