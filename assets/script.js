@@ -574,6 +574,7 @@ downloadZipButton.addEventListener("click", function (e) {
   Inputs.querySelectorAll(".certinputs").forEach(function (input) {
     // console.log("input", input);
     if (titles.includes(input.value)) {
+      input.dataset.editable = "1";
       effectiveDOMs.push(input);
       dataIndex.push(titles.indexOf(input.value));
     }
