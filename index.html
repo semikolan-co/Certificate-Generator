@@ -89,8 +89,18 @@
         <div id="asidebar">
           <div id="editor"></div>
           <div class="uploadcontainer">
-            
-            <label class=" button uploadlabel">
+            <!-- Limit only Image Files -->
+            <label class="button uploadlabel">
+              Upload CSV/Excel
+              <input
+                id="uploadcsv"
+                type="file"
+                class="button"
+                value="Upload Image"
+                accept=".csv,application/vnd.ms-excel,.xlt,application/vnd.ms-excel,.xla,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xltx,application/vnd.openxmlformats-officedocument.spreadsheetml.template,.xlsm,application/vnd.ms-excel.sheet.macroEnabled.12,.xltm,application/vnd.ms-excel.template.macroEnabled.12,.xlam,application/vnd.ms-excel.addin.macroEnabled.12,.xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+              />
+            </label>
+            <label class="button uploadlabel">
               Upload Cerrt
               <input
                 id="uploadimage"

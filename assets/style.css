@@ -60,14 +60,16 @@ main > div:nth-child(2) {
   font-size: 1em;
 }
 .uploadlabel {
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin: 0 20px;
   text-align: center;
-  width: 100%;
+  width: calc(100% - 40px);
   padding: 10px;
 }
 .uploadcontainer {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   justify-content: center;
 }
 .button {
