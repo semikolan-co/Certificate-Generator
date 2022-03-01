@@ -565,19 +565,19 @@ function to_json(workbook) {
 // ----------------------------------------------
 
 downloadZipButton.addEventListener("click", function (e) {
-
   // Start recording Time
-  
+  var startTime = new Date();
+
   console.log("Downloading Zip");
-  
+
   loaderbody.style.display = "flex";
 
   var zip = new JSZip();
   var count = 0;
   var totalRows = sheetData.length;
   var zipFilename = "CERRT_SemiKolan.zip";
-  var effectiveDOMs = []
-  var dataIndex = []
+  var effectiveDOMs = [];
+  var dataIndex = [];
   Inputs.querySelectorAll(".certinputs").forEach(function (input) {
     // console.log("input", input);
     if (titles.includes(input.value)) {
@@ -588,8 +588,6 @@ downloadZipButton.addEventListener("click", function (e) {
   });
 
   sheetData.forEach(function (row, i) {
-
-
     effectiveDOMs.forEach(function (dom, j) {
       dom.value = row[dataIndex[j]];
     });
@@ -598,21 +596,24 @@ downloadZipButton.addEventListener("click", function (e) {
     var filename = "Cerrt_" + (i + 1) + ".png";
     var src = canvas.toDataURL("image/png");
     // loading a file and add it in a zip file
-    JSZipUtils.getBinaryContent(src,
-      function (err, data) {
-        if (err) {
-          throw err; // or handle the error
-        }
-        zip.file(filename, data, { binary: true });
-        count++;
-        if (count == sheetData.length) {
-          zip.generateAsync({ type: "blob" }).then(function (content) {
-            saveAs(content, zipFilename);
-            console.log("Certificate Downloaded");
-          });
-        }
+    JSZipUtils.getBinaryContent(src, function (err, data) {
+      if (err) {
+        throw err; // or handle the error
       }
-    );
+      zip.file(filename, data, { binary: true });
+      count++;
+      if (count == sheetData.length) {
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          saveAs(content, zipFilename);
+          console.log("Certificate Downloaded");
+        });
+      }
+    });
   });
+  // Print Time
+  var endTime = new Date();
+  var timeDiff = endTime - startTime;
+  console.log("Time Taken: " + timeDiff + "ms");
+
   loaderbody.style.display = "none";
 });
