@@ -286,8 +286,8 @@ function addField(text = "Field Name", position = [20, 20], editable = true) {
    data-fontsize="5"
    data-font="'Open Sans', sans-serif"
    data-textalign="left"
-   data-x="10"
-   data-y="10"
+   data-x="${position[0]}"
+   data-y="${position[1]}"
    data-color="#000"
    data-opacity="80"
    class="certinputs"
@@ -516,6 +516,7 @@ function importFile(evt) {
       var data = Object.values(contents)[0];
       var titles = data[0];
       titles.forEach((title, i) => {
+        addField(title, [20,20+(i*10)], false);
         
       })
     }
