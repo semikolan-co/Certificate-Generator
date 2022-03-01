@@ -273,6 +273,10 @@ imageFileInput.addEventListener("change", function () {
 });
 
 addInputButton.addEventListener("click", function () {
+  addField();
+});
+
+function addField() {
   var data = `
  <div>
  <input type="checkbox"  class="certcheck" />
@@ -296,7 +300,7 @@ addInputButton.addEventListener("click", function () {
   Inputs.innerHTML += data;
   addListenerToInputs();
   drawTextfromInputs();
-});
+};
 
 Editor.fontsize.addEventListener("change", function () {
   updateDataset("fontsize", this.value);
@@ -483,3 +487,56 @@ canvas.addEventListener("mouseout", function (e) {
     dragMode = false;
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+var file = document.getElementById('uploadcsv')
+var viewer = document.getElementById('dataviewer')
+file.addEventListener('change', importFile);
+
+function importFile(evt) {
+  var f = evt.target.files[0];
+
+  if (f) {
+    var r = new FileReader();
+    r.onload = e => {
+      var contents = JSON.parse(processExcel(e.target.result));
+      // Get First object from object Contents
+      var data = Object.values(contents)[0];
+      var titles = data[0];
+    }
+    r.readAsBinaryString(f);
+  } else {
+    console.log("Failed to load file");
+  }
+}
+
+function processExcel(data) {
+  var workbook = XLSX.read(data, {
+    type: 'binary'
+  });
+
+  var firstSheet = workbook.SheetNames[0];
+  var data = to_json(workbook);
+  return data
+};
+
+function to_json(workbook) {
+  var result = {};
+  workbook.SheetNames.forEach(function(sheetName) {
+    var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+      header: 1
+    });
+    if (roa.length) result[sheetName] = roa;
+  });
+  return JSON.stringify(result, 2, 2);
+};
