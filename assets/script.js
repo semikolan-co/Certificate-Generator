@@ -225,6 +225,9 @@ function addText(
 
   // Setting Text Position
   ctx.textBaseline = "top";
+  if(editable == "0"){
+    text = "{{"+text+"}}";
+  }
 
   // Measure Height & Width of Text
   var textWidth = ctx.measureText(text).width * (100 / canvas.width);
@@ -236,9 +239,7 @@ function addText(
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
   const yPos = Number(position[1] * (canvas.height / 100));
-  if(editable == "0"){
-    text = "{{"+text+"}}";
-  }
+  
   ctx.fillText(text, xPos, yPos);
 }
 
