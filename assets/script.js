@@ -276,13 +276,13 @@ addInputButton.addEventListener("click", function () {
   addField();
 });
 
-function addField() {
+function addField(text = "Field Name", position = [20, 20], editable = true) {
   var data = `
  <div>
  <input type="checkbox"  class="certcheck" />
  <input
    type="text"
-   value="Organization's Name"
+   value="${text}"
    data-fontsize="5"
    data-font="'Open Sans', sans-serif"
    data-textalign="left"
@@ -293,6 +293,8 @@ function addField() {
    class="certinputs"
    data-bold="0"
    data-italic="0"
+   data-editable="${editable ? "1" : "0"}"
+   ${editable ? "" : "disabled"}
  />
  <button class="delbutton"><i class="fa fa-trash"></i></button>
 </div>
@@ -513,6 +515,9 @@ function importFile(evt) {
       // Get First object from object Contents
       var data = Object.values(contents)[0];
       var titles = data[0];
+      titles.forEach((title, i) => {
+        
+      })
     }
     r.readAsBinaryString(f);
   } else {
