@@ -503,7 +503,9 @@ canvas.addEventListener("mouseout", function (e) {
 
 
 
-
+// ----------------------------------------------
+// ------------  CSV/Excel Upload  --------------
+// ----------------------------------------------
 
 
 
@@ -522,6 +524,7 @@ function importFile(evt) {
       // Get First object from object Contents
       var data = Object.values(contents)[0];
       var titles = data[0];
+      Inputs.innerHTML = "";
       titles.forEach((title, i) => {
         addField(title, [20,20+(i*10)], false);
         
