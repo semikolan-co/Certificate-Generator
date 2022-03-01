@@ -21,10 +21,16 @@ var startY = 0;
 var selectedElement = null;
 var dragMode = false;
 
+
+// Defining Sheet Stuffs
+var titles = null;
+var sheetData = null;
+
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
 var downloadTypeButton = document.getElementById("downloadtype");
 var downloadButton = document.getElementById("downloadbutton");
+var downloadZipButton = document.getElementById("downloadzipbutton");
 var imageFileInput = document.getElementById("uploadimage");
 var addInputButton = document.getElementById("addinput");
 var Editor = {
@@ -225,8 +231,8 @@ function addText(
 
   // Setting Text Position
   ctx.textBaseline = "top";
-  if(editable == "0"){
-    text = "{{"+text+"}}";
+  if (editable == "0") {
+    text = "{{" + text + "}}";
   }
 
   // Measure Height & Width of Text
@@ -239,7 +245,7 @@ function addText(
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
   const yPos = Number(position[1] * (canvas.height / 100));
-  
+
   ctx.fillText(text, xPos, yPos);
 }
 
@@ -309,7 +315,7 @@ function addField(text = "Field Name", position = [20, 20], editable = true) {
   Inputs.innerHTML += data;
   addListenerToInputs();
   drawTextfromInputs();
-};
+}
 
 Editor.fontsize.addEventListener("change", function () {
   updateDataset("fontsize", this.value);
@@ -497,42 +503,35 @@ canvas.addEventListener("mouseout", function (e) {
   }
 });
 
-
-
-
-
-
-
 // ----------------------------------------------
 // ------------  CSV/Excel Upload  --------------
 // ----------------------------------------------
 
-
-
-
-var file = document.getElementById('uploadcsv')
-var viewer = document.getElementById('dataviewer')
-file.addEventListener('change', importFile);
+var file = document.getElementById("uploadcsv");
+var viewer = document.getElementById("dataviewer");
+file.addEventListener("change", importFile);
 
 function importFile(evt) {
   var f = evt.target.files[0];
 
   if (f) {
     var r = new FileReader();
-    r.onload = e => {
+    r.onload = (e) => {
       var contents = JSON.parse(processExcel(e.target.result));
       // Get First object from object Contents
       var data = Object.values(contents)[0];
-      var titles = data[0];
+      titles = data[0];
+      sheetData = data.slice(1);
+      console.log(sheetData);
+
       Inputs.innerHTML = "";
       document.querySelector(".downloadzip").style.display = "flex";
       // document.querySelector(".downloadzip").href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.map(row => titles.map(field => row[field]).join(",")).join("\n"));
       document.querySelector(".downloadfile").style.display = "none";
       titles.forEach((title, i) => {
-        addField(title, [20,20+(i*10)], false);
-        
-      })
-    }
+        addField(title, [20, 20 + i * 10], false);
+      });
+    };
     r.readAsBinaryString(f);
   } else {
     console.log("Failed to load file");
@@ -541,28 +540,77 @@ function importFile(evt) {
 
 function processExcel(data) {
   var workbook = XLSX.read(data, {
-    type: 'binary'
+    type: "binary"
   });
 
   var firstSheet = workbook.SheetNames[0];
   var data = to_json(workbook);
-  return data
-};
+  return data;
+}
 
 function to_json(workbook) {
   var result = {};
-  workbook.SheetNames.forEach(function(sheetName) {
+  workbook.SheetNames.forEach(function (sheetName) {
     var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
       header: 1
     });
     if (roa.length) result[sheetName] = roa;
   });
   return JSON.stringify(result, 2, 2);
-};
-
-
+}
 
 // ----------------------------------------------
 // ------------  Generating Zip  ----------------
 // ----------------------------------------------
 
+downloadZipButton.addEventListener("click", function (e) {
+  console.log("Downloading Zip");
+  // var zip = new JSZip();
+  // var count = 0;
+  // var zipFilename = "Pictures.zip";
+
+  // links.forEach(function (url, i) {
+  //   var filename = links[i];
+  //   filename = filename
+  //     .replace(/[\/\*\|\:\<\>\?\"\\]/gi, "")
+  //     .replace("httpsi.imgur.com", "");
+  //   // loading a file and add it in a zip file
+  //   JSZipUtils.getBinaryContent(url, function (err, data) {
+  //     if (err) {
+  //       throw err; // or handle the error
+  //     }
+  //     zip.file(filename, data, { binary: true });
+  //     count++;
+  //     if (count == links.length) {
+  //       zip.generateAsync({ type: "blob" }).then(function (content) {
+  //         saveAs(content, zipFilename);
+  //       });
+  //     }
+  //   });
+  // });
+
+  var zip = new JSZip();
+  var count = 0;
+  var zipFilename = "CERRT_SemiKolan.zip";
+
+
+  sheetData.forEach(function (row, i) {
+    var filename = "Cerrt_"+(i+1)+".png";
+    // loading a file and add it in a zip file
+    JSZipUtils.getBinaryContent("/certificates/dummy.png", function (err, data) {
+      if (err) {
+        throw err; // or handle the error
+      }
+      zip.file(filename, data, { binary: true });
+      count++;
+      if (count == sheetData.length) {
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          saveAs(content, zipFilename);
+        });
+      }
+    });
+  });
+
+
+
+});
