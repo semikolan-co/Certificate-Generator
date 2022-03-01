@@ -130,6 +130,7 @@ function drawTextfromInputs() {
     var color = textInput.dataset.color;
     var bold = textInput.dataset.bold;
     var italic = textInput.dataset.italic;
+    var editable = textInput.dataset.editable;
 
     // Adding Text
     addText(
@@ -143,7 +144,8 @@ function drawTextfromInputs() {
       color,
       bold,
       italic,
-      textInputs[i]
+      textInputs[i],
+      editable
     );
   }
   if (selectedElement != null) {
@@ -201,7 +203,8 @@ function addText(
   color = defaultColor,
   bold = false,
   italic = false,
-  dom
+  dom,
+  editable = "1"
 ) {
   // Setting Font
   ctx.font =
@@ -233,6 +236,9 @@ function addText(
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
   const yPos = Number(position[1] * (canvas.height / 100));
+  if(editable == "0"){
+    text = "{{"+text+"}}";
+  }
   ctx.fillText(text, xPos, yPos);
 }
 
