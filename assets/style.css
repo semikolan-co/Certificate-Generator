@@ -116,6 +116,11 @@ main > div:nth-child(2) {
   background: #ffffff0a;
   color: #fff;
 }
+#inputs input[type="text"]:disabled {
+  background: #ffffff2a;
+  color: #fff;
+  cursor: not-allowed;
+}
 #inputs input[type="checkbox"] {
   /* change height width of checkbox */
   width: 20px;
