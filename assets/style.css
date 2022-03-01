@@ -46,6 +46,7 @@ main > div:nth-child(2) {
 .downloadcontainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   font-size: 1.3em;
 }
@@ -57,6 +58,12 @@ main > div:nth-child(2) {
   border-radius: 5px;
 }
 #downloadbutton {
+  font-size: 1em;
+}
+.downloadzip{
+  display: none;
+}
+#downloadzipbutton{
   font-size: 1em;
 }
 .uploadlabel {

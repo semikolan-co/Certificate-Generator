@@ -525,6 +525,9 @@ function importFile(evt) {
       var data = Object.values(contents)[0];
       var titles = data[0];
       Inputs.innerHTML = "";
+      document.querySelector(".downloadzip").style.display = "flex";
+      // document.querySelector(".downloadzip").href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.map(row => titles.map(field => row[field]).join(",")).join("\n"));
+      document.querySelector(".downloadfile").style.display = "none";
       titles.forEach((title, i) => {
         addField(title, [20,20+(i*10)], false);
         
@@ -556,3 +559,10 @@ function to_json(workbook) {
   });
   return JSON.stringify(result, 2, 2);
 };
+
+
+
+// ----------------------------------------------
+// ------------  Generating Zip  ----------------
+// ----------------------------------------------
+
