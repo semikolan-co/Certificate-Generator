@@ -59,7 +59,7 @@ main > div:nth-child(2) {
 #downloadbutton {
   font-size: 1em;
 }
-#uploadimage {
+.uploadlabel {
   font-size: 1.5em;
   margin: 0 20px;
   text-align: center;
@@ -246,6 +246,15 @@ input[type="color"] {
   cursor: pointer;
 }
 
+
+input[type="file"]{
+  display: none;
+}
+
+
+
+
+
 @media screen and (max-width: 800px) {
   main{
     flex-direction: column-reverse;
@@ -271,3 +280,9 @@ input[type="color"] {
   }
 
 }
+
+
+
+
+
+
