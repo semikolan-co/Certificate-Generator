@@ -21,7 +21,6 @@ var startY = 0;
 var selectedElement = null;
 var dragMode = false;
 
-
 // Defining Sheet Stuffs
 var titles = null;
 var sheetData = null;
@@ -565,52 +564,47 @@ function to_json(workbook) {
 
 downloadZipButton.addEventListener("click", function (e) {
   console.log("Downloading Zip");
-  // var zip = new JSZip();
-  // var count = 0;
-  // var zipFilename = "Pictures.zip";
-
-  // links.forEach(function (url, i) {
-  //   var filename = links[i];
-  //   filename = filename
-  //     .replace(/[\/\*\|\:\<\>\?\"\\]/gi, "")
-  //     .replace("httpsi.imgur.com", "");
-  //   // loading a file and add it in a zip file
-  //   JSZipUtils.getBinaryContent(url, function (err, data) {
-  //     if (err) {
-  //       throw err; // or handle the error
-  //     }
-  //     zip.file(filename, data, { binary: true });
-  //     count++;
-  //     if (count == links.length) {
-  //       zip.generateAsync({ type: "blob" }).then(function (content) {
-  //         saveAs(content, zipFilename);
-  //       });
-  //     }
-  //   });
-  // });
+  
 
   var zip = new JSZip();
   var count = 0;
   var zipFilename = "CERRT_SemiKolan.zip";
-
-
-  sheetData.forEach(function (row, i) {
-    var filename = "Cerrt_"+(i+1)+".png";
-    // loading a file and add it in a zip file
-    JSZipUtils.getBinaryContent("/certificates/dummy.png", function (err, data) {
-      if (err) {
-        throw err; // or handle the error
-      }
-      zip.file(filename, data, { binary: true });
-      count++;
-      if (count == sheetData.length) {
-        zip.generateAsync({ type: "blob" }).then(function (content) {
-          saveAs(content, zipFilename);
-        });
-      }
-    });
+  var effectiveDOMs = []
+  var dataIndex = []
+  Inputs.querySelectorAll(".certinputs").forEach(function (input) {
+    // console.log("input", input);
+    if (titles.includes(input.value)) {
+      effectiveDOMs.push(input);
+      dataIndex.push(titles.indexOf(input.value));
+    }
   });
 
+  sheetData.forEach(function (row, i) {
+    // Updating Canvas with new data
+  
+    // console.log(effectiveDOMs[0].value ,row[dataIndex[0]]);
+    effectiveDOMs.forEach(function (dom, j) {
+      dom.value = row[dataIndex[j]];
+    });
+    drawTextfromInputs();
 
-
+    var filename = "Cerrt_" + (i + 1) + ".png";
+    var src = canvas.toDataURL("image/png");
+    // loading a file and add it in a zip file
+    JSZipUtils.getBinaryContent(src,
+      function (err, data) {
+        if (err) {
+          throw err; // or handle the error
+        }
+        zip.file(filename, data, { binary: true });
+        count++;
+        if (count == sheetData.length) {
+          zip.generateAsync({ type: "blob" }).then(function (content) {
+            saveAs(content, zipFilename);
+            console.log("Certificate Downloaded");
+          });
+        }
+      }
+    );
+  });
 });
