@@ -611,10 +611,16 @@ downloadZipButton.addEventListener("click", function (e) {
           var endTime = new Date();
           var timeDiff = endTime - startTime;
           console.log("Time Taken: " + timeDiff + "ms");
+
+
+          effectiveDOMs.forEach(function (dom, j) {
+            dom.dataset.editable = "0";
+            dom.value = titles[dataIndex[j]];
+          });
         });
       }
     });
   });
 
-  loaderbody.style.display = "none";
+  // loaderbody.style.display = "none";
 });
