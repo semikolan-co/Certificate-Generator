@@ -24,7 +24,7 @@ var dragMode = false;
 // Defining Sheet Stuffs
 var titles = null;
 var sheetData = null;
-// var progress = document.getElementById("progress");
+var progress = document.getElementById("progress");
 var loaderbody = document.querySelector(".loaderbody");
 
 // Defining DOM Elements
@@ -570,7 +570,6 @@ downloadZipButton.addEventListener("click", function (e) {
 
   console.log("Downloading Zip");
 
-  loaderbody.style.display = "flex";
 
   var zip = new JSZip();
   var count = 0;
@@ -611,8 +610,10 @@ downloadZipButton.addEventListener("click", function (e) {
           var endTime = new Date();
           var timeDiff = endTime - startTime;
           console.log("Time Taken: " + timeDiff + "ms");
+          progress.innerHTML = `Generated ${totalRows} certificates in ${timeDiff/1000} seconds`;
 
 
+          loaderbody.style.display = "flex";
           effectiveDOMs.forEach(function (dom, j) {
             dom.dataset.editable = "0";
             dom.value = titles[dataIndex[j]];
@@ -620,7 +621,7 @@ downloadZipButton.addEventListener("click", function (e) {
           drawTextfromInputs();
           setTimeout(function () {
             loaderbody.style.display = "none";
-          }, 1000);
+          }, 5000);
         });
       }
     });
