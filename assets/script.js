@@ -606,14 +606,15 @@ downloadZipButton.addEventListener("click", function (e) {
         zip.generateAsync({ type: "blob" }).then(function (content) {
           saveAs(content, zipFilename);
           console.log("Certificate Downloaded");
+
+          // Print Time
+          var endTime = new Date();
+          var timeDiff = endTime - startTime;
+          console.log("Time Taken: " + timeDiff + "ms");
         });
       }
     });
   });
-  // Print Time
-  var endTime = new Date();
-  var timeDiff = endTime - startTime;
-  console.log("Time Taken: " + timeDiff + "ms");
 
   loaderbody.style.display = "none";
 });
