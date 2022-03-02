@@ -617,6 +617,10 @@ downloadZipButton.addEventListener("click", function (e) {
             dom.dataset.editable = "0";
             dom.value = titles[dataIndex[j]];
           });
+          drawTextfromInputs();
+          setTimeout(function () {
+            loaderbody.style.display = "none";
+          }, 1000);
         });
       }
     });
