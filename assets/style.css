@@ -46,6 +46,7 @@ main > div:nth-child(2) {
 .downloadcontainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   font-size: 1.3em;
 }
@@ -59,15 +60,23 @@ main > div:nth-child(2) {
 #downloadbutton {
   font-size: 1em;
 }
-#uploadimage {
-  font-size: 1.5em;
+.downloadzip{
+  display: none;
+}
+#downloadzipbutton{
+  font-size: 1em;
+}
+.uploadlabel {
+  font-size: 1.2em;
   margin: 0 20px;
   text-align: center;
-  width: 100%;
+  width: calc(100% - 40px);
   padding: 10px;
 }
 .uploadcontainer {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   justify-content: center;
 }
 .button {
@@ -113,6 +122,11 @@ main > div:nth-child(2) {
   font-weight: 500;
   background: #ffffff0a;
   color: #fff;
+}
+#inputs input[type="text"]:disabled {
+  background: #ffffff2a;
+  color: #fff;
+  cursor: not-allowed;
 }
 #inputs input[type="checkbox"] {
   /* change height width of checkbox */
@@ -246,6 +260,15 @@ input[type="color"] {
   cursor: pointer;
 }
 
+
+input[type="file"]{
+  display: none;
+}
+
+
+
+
+
 @media screen and (max-width: 800px) {
   main{
     flex-direction: column-reverse;
@@ -269,5 +292,26 @@ input[type="color"] {
   .slidecontainer{
     width: auto;
   }
+
+}
+
+
+
+
+
+
+/* Progress Loader */
+.loaderbody{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000c;
+  z-index: 9;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em;
 
 }

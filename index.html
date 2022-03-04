@@ -51,7 +51,6 @@
           </select>
         </div>
         <div class="textforamtting">
-          
           <button id="textbold" class="formattool" data-active="0">B</button>
           <button id="textitalic" class="formattool" data-active="0">I</button>
           <input type="color" id="textcolor" />
@@ -73,7 +72,7 @@
           <div id="certificatediv">
             <canvas id="certificatecanvas"></canvas>
           </div>
-          <div class="downloadcontainer">
+          <div class="downloadcontainer downloadfile">
             <div>
               Download as:
               <select id="downloadtype">
@@ -86,18 +85,34 @@
               <button id="downloadbutton" class="button">Download</button>
             </div>
           </div>
+          <div class="downloadcontainer downloadzip">
+            <button id="downloadzipbutton" class="button">Download Zip</button>
+          </div>
         </div>
         <div id="asidebar">
           <div id="editor"></div>
           <div class="uploadcontainer">
             <!-- Limit only Image Files -->
-            <input
-              id="uploadimage"
-              type="file"
-              class="button"
-              value="Upload Image"
-              accept="image/*"
-            />
+            <label class="button uploadlabel">
+              Upload CSV/Excel
+              <input
+                id="uploadcsv"
+                type="file"
+                class="button"
+                value="Upload Image"
+                accept=".csv,application/vnd.ms-excel,.xlt,application/vnd.ms-excel,.xla,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.xltx,application/vnd.openxmlformats-officedocument.spreadsheetml.template,.xlsm,application/vnd.ms-excel.sheet.macroEnabled.12,.xltm,application/vnd.ms-excel.template.macroEnabled.12,.xlam,application/vnd.ms-excel.addin.macroEnabled.12,.xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+              />
+            </label>
+            <label class="button uploadlabel">
+              Upload Cerrt
+              <input
+                id="uploadimage"
+                type="file"
+                class="button"
+                value="Upload Image"
+                accept="image/*"
+              />
+            </label>
           </div>
           <div id="inputs">
             <div>
@@ -175,7 +190,18 @@
       </div>
     </main>
 
+    <div class="loaderbody">
+      <div>
+       <span id="progress">-/-</span>
+      
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"></script>
     <script src="assets/script.js"></script>
   </body>
 </html>

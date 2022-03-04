@@ -21,10 +21,17 @@ var startY = 0;
 var selectedElement = null;
 var dragMode = false;
 
+// Defining Sheet Stuffs
+var titles = null;
+var sheetData = null;
+var progress = document.getElementById("progress");
+var loaderbody = document.querySelector(".loaderbody");
+
 // Defining DOM Elements
 var Inputs = document.getElementById("inputs");
 var downloadTypeButton = document.getElementById("downloadtype");
 var downloadButton = document.getElementById("downloadbutton");
+var downloadZipButton = document.getElementById("downloadzipbutton");
 var imageFileInput = document.getElementById("uploadimage");
 var addInputButton = document.getElementById("addinput");
 var Editor = {
@@ -130,6 +137,7 @@ function drawTextfromInputs() {
     var color = textInput.dataset.color;
     var bold = textInput.dataset.bold;
     var italic = textInput.dataset.italic;
+    var editable = textInput.dataset.editable;
 
     // Adding Text
     addText(
@@ -143,7 +151,8 @@ function drawTextfromInputs() {
       color,
       bold,
       italic,
-      textInputs[i]
+      textInputs[i],
+      editable
     );
   }
   if (selectedElement != null) {
@@ -201,7 +210,8 @@ function addText(
   color = defaultColor,
   bold = false,
   italic = false,
-  dom
+  dom,
+  editable = "1"
 ) {
   // Setting Font
   ctx.font =
@@ -222,6 +232,9 @@ function addText(
 
   // Setting Text Position
   ctx.textBaseline = "top";
+  if (editable == "0") {
+    text = "{{" + text + "}}";
+  }
 
   // Measure Height & Width of Text
   var textWidth = ctx.measureText(text).width * (100 / canvas.width);
@@ -233,6 +246,7 @@ function addText(
   // Setting Text Position
   const xPos = Number(position[0] * (canvas.width / 100));
   const yPos = Number(position[1] * (canvas.height / 100));
+
   ctx.fillText(text, xPos, yPos);
 }
 
@@ -273,22 +287,28 @@ imageFileInput.addEventListener("change", function () {
 });
 
 addInputButton.addEventListener("click", function () {
+  addField();
+});
+
+function addField(text = "Field Name", position = [20, 20], editable = true) {
   var data = `
  <div>
  <input type="checkbox"  class="certcheck" />
  <input
    type="text"
-   value="Organization's Name"
+   value="${text}"
    data-fontsize="5"
    data-font="'Open Sans', sans-serif"
    data-textalign="left"
-   data-x="10"
-   data-y="10"
+   data-x="${position[0]}"
+   data-y="${position[1]}"
    data-color="#000"
    data-opacity="80"
    class="certinputs"
    data-bold="0"
    data-italic="0"
+   data-editable="${editable ? "1" : "0"}"
+   ${editable ? "" : "disabled"}
  />
  <button class="delbutton"><i class="fa fa-trash"></i></button>
 </div>
@@ -296,7 +316,7 @@ addInputButton.addEventListener("click", function () {
   Inputs.innerHTML += data;
   addListenerToInputs();
   drawTextfromInputs();
-});
+}
 
 Editor.fontsize.addEventListener("change", function () {
   updateDataset("fontsize", this.value);
@@ -482,4 +502,130 @@ canvas.addEventListener("mouseout", function (e) {
     handleMouseOut(e);
     dragMode = false;
   }
+});
+
+// ----------------------------------------------
+// ------------  CSV/Excel Upload  --------------
+// ----------------------------------------------
+
+var file = document.getElementById("uploadcsv");
+var viewer = document.getElementById("dataviewer");
+file.addEventListener("change", importFile);
+
+function importFile(evt) {
+  var f = evt.target.files[0];
+
+  if (f) {
+    var r = new FileReader();
+    r.onload = (e) => {
+      var contents = JSON.parse(processExcel(e.target.result));
+      // Get First object from object Contents
+      var data = Object.values(contents)[0];
+      titles = data[0];
+      sheetData = data.slice(1);
+      console.log(sheetData);
+
+      Inputs.innerHTML = "";
+      document.querySelector(".downloadzip").style.display = "flex";
+      // document.querySelector(".downloadzip").href = "data:text/csv;charset=utf-8," + encodeURIComponent(data.map(row => titles.map(field => row[field]).join(",")).join("\n"));
+      document.querySelector(".downloadfile").style.display = "none";
+      titles.forEach((title, i) => {
+        addField(title, [20, 20 + i * 10], false);
+      });
+    };
+    r.readAsBinaryString(f);
+  } else {
+    console.log("Failed to load file");
+  }
+}
+
+function processExcel(data) {
+  var workbook = XLSX.read(data, {
+    type: "binary"
+  });
+
+  var firstSheet = workbook.SheetNames[0];
+  var data = to_json(workbook);
+  return data;
+}
+
+function to_json(workbook) {
+  var result = {};
+  workbook.SheetNames.forEach(function (sheetName) {
+    var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+      header: 1
+    });
+    if (roa.length) result[sheetName] = roa;
+  });
+  return JSON.stringify(result, 2, 2);
+}
+
+// ----------------------------------------------
+// ------------  Generating Zip  ----------------
+// ----------------------------------------------
+
+downloadZipButton.addEventListener("click", function (e) {
+  // Start recording Time
+  var startTime = new Date();
+
+  console.log("Downloading Zip");
+
+
+  var zip = new JSZip();
+  var count = 0;
+  var totalRows = sheetData.length;
+  var zipFilename = "CERRT_SemiKolan.zip";
+  var effectiveDOMs = [];
+  var dataIndex = [];
+  Inputs.querySelectorAll(".certinputs").forEach(function (input) {
+    // console.log("input", input);
+    if (titles.includes(input.value)) {
+      input.dataset.editable = "1";
+      effectiveDOMs.push(input);
+      dataIndex.push(titles.indexOf(input.value));
+    }
+  });
+
+  sheetData.forEach(function (row, i) {
+    effectiveDOMs.forEach(function (dom, j) {
+      dom.value = row[dataIndex[j]];
+    });
+    drawTextfromInputs();
+
+    var filename = "Cerrt_" + (i + 1) + ".png";
+    var src = canvas.toDataURL("image/png");
+    // loading a file and add it in a zip file
+    JSZipUtils.getBinaryContent(src, function (err, data) {
+      if (err) {
+        throw err; // or handle the error
+      }
+      zip.file(filename, data, { binary: true });
+      count++;
+      if (count == sheetData.length) {
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          saveAs(content, zipFilename);
+          console.log("Certificate Downloaded");
+
+          // Print Time
+          var endTime = new Date();
+          var timeDiff = endTime - startTime;
+          console.log("Time Taken: " + timeDiff + "ms");
+          progress.innerHTML = `Generated ${totalRows} certificates in ${timeDiff/1000} seconds`;
+
+
+          loaderbody.style.display = "flex";
+          effectiveDOMs.forEach(function (dom, j) {
+            dom.dataset.editable = "0";
+            dom.value = titles[dataIndex[j]];
+          });
+          drawTextfromInputs();
+          setTimeout(function () {
+            loaderbody.style.display = "none";
+          }, 5000);
+        });
+      }
+    });
+  });
+
+  // loaderbody.style.display = "none";
 });
