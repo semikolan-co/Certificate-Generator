@@ -136,7 +136,7 @@ main > div:nth-child(2) {
 .delbutton {
   background: #ffffff0a;
   padding: 10px;
-  border: 2px solid #ccc4;
+  border: 2px solid rgba(193, 193, 193, 0.267);
   color: #fff;
   cursor: pointer;
   border-radius: 5px;
